@@ -35,10 +35,12 @@ public class OneHundred {
     }
 public void saving(){
         Sprint sprint= new Sprint(3,"ja",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"Pending","Pending");
-   Sprint spi= sprintRepository.save(sprint);
+  sprintRepository.save(sprint);
    UserStory userStory = new UserStory(120,"Kamil","Kamil",75,"DONE");
-    userStory.addTo(spi);
     userStoryRepository.save(userStory);
+   sprint.getUserStories().add(userStory);
+   sprintRepository.save(sprint);
+
 }
     public  String function() {
         int leftLimit = 97; // letter 'a'
