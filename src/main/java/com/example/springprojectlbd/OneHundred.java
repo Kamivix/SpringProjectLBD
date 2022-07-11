@@ -23,7 +23,7 @@ public class OneHundred {
 
 
 
-@PostConstruct
+
     public void createOneHunderStory(){
         for(int i=5;i<105;++i){
             String name=function();
@@ -34,7 +34,7 @@ public class OneHundred {
             userStoryRepository.save(new UserStory(Id,name,description,count,status));
         }
     }
-    @PostConstruct
+
 public void saving(){
         Sprint sprint= new Sprint(3,"ja",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"Pending","Pending");
   sprintRepository.save(sprint);
