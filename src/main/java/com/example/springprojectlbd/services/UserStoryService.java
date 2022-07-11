@@ -1,6 +1,7 @@
 package com.example.springprojectlbd.services;
 
 
+import com.example.springprojectlbd.dto.UserStoryDto;
 import com.example.springprojectlbd.entity.UserStory;
 import com.example.springprojectlbd.repository.UserStoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +11,18 @@ import java.util.Random;
 
 @Service
 public class UserStoryService {
-UserStoryRepository userStoryRepository;
+    UserStoryRepository userStoryRepository;
 
-@Autowired
+    @Autowired
     public UserStoryService(UserStoryRepository userStoryRepository) {
         this.userStoryRepository = userStoryRepository;
     }
 
-public void test(){
-
-}
+    public UserStoryDto mapToUserStoryDto(UserStory userStory) {
+        return new UserStoryDto(userStory.getId(), userStory.getUserStoryName(), userStory.getDescription(), userStory.getCountOfStoryPoint(), userStory.getStatus());
 
     }
+}
 
 
 

@@ -6,5 +6,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserStoryRepository extends CrudRepository<UserStory,Long> {
+public interface UserStoryRepository extends PagingAndSortingRepository<UserStory,Long> {
 }

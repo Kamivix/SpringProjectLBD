@@ -1,35 +1,21 @@
-package com.example.springprojectlbd.entity;
+package com.example.springprojectlbd.dto;
 
-import javax.persistence.*;
+import com.example.springprojectlbd.entity.Sprint;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "USER_STORY")
-public class UserStory {
+public class UserStoryDto
+{
 
-    @Id
-    @Column(name = "ID")
-    private long id;
-
-    @Column(name = "USERSTORYNAME")
+    private Long id;
     private String userStoryName;
-
-    @Column(name = "DESCRIPTION")
     private String description;
-
-    @Column(name = "COUNTOFSTORYPOINT")
     private int countOfStoryPoint;
-
-    @Column(name = "STATUS")
     private String status;
 
+    private Set<SprintDto> sprints= new HashSet<>();
 
-
-@ManyToMany(mappedBy = "userStories",fetch=FetchType.LAZY,cascade = CascadeType.ALL)
-    Set<Sprint> sprints= new HashSet<>();
-
-    public UserStory(long id, String userStoryName, String description, int countOfStoryPoint, String status) {
+    public UserStoryDto(Long id, String userStoryName, String description, int countOfStoryPoint, String status) {
         this.id = id;
         this.userStoryName = userStoryName;
         this.description = description;
@@ -37,18 +23,11 @@ public class UserStory {
         this.status = status;
     }
 
-    public UserStory() {
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public Set<Sprint> getSprints() {
-        return sprints;
-    }
-
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -84,7 +63,11 @@ public class UserStory {
         this.status = status;
     }
 
-    public void setSprints(Set<Sprint> sprints) {
+    public Set<SprintDto> getSprints() {
+        return sprints;
+    }
+
+    public void setSprints(Set<SprintDto> sprints) {
         this.sprints = sprints;
     }
 }

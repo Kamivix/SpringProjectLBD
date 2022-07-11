@@ -1,9 +1,7 @@
 package com.example.springprojectlbd.entity;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,9 +23,6 @@ private String description;
 private String status;
 
 
-    public Set<UserStory> getUserStories() {
-        return userStories = new HashSet<>();
-    }
 
     @ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
     @JoinTable(
@@ -36,13 +31,13 @@ private String status;
             inverseJoinColumns = @JoinColumn(name = "USERSTORY_ID",referencedColumnName = "ID")
     )
 
-
-
 private Set<UserStory> userStories;
 
-    public Set<UserStory> getuserStories(){
-        return userStories;
+
+    public Set<UserStory> getUserStories() {
+        return userStories = new HashSet<>();
     }
+
     public Sprint(long id, String sprintName, Timestamp startTime, Timestamp endTime, String description, String status) {
         this.id = id;
         this.sprintName = sprintName;
@@ -59,8 +54,51 @@ private Set<UserStory> userStories;
         return id;
     }
 
-    public void addTo(UserStory userStory){
-        userStories.add(userStory);
+    public void setId(long id) {
+        this.id = id;
     }
 
+    public String getSprintName() {
+        return sprintName;
+    }
+
+    public void setSprintName(String sprintName) {
+        this.sprintName = sprintName;
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
+    }
+
+    public Timestamp getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Timestamp endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setUserStories(Set<UserStory> userStories) {
+        this.userStories = userStories;
+    }
 }

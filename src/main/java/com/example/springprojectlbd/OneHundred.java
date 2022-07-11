@@ -7,6 +7,7 @@ import com.example.springprojectlbd.repository.UserStoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.sql.Timestamp;
 import java.util.Random;
 @Component
@@ -22,7 +23,7 @@ public class OneHundred {
 
 
 
-
+@PostConstruct
     public void createOneHunderStory(){
         for(int i=5;i<105;++i){
             String name=function();
@@ -33,6 +34,7 @@ public class OneHundred {
             userStoryRepository.save(new UserStory(Id,name,description,count,status));
         }
     }
+    @PostConstruct
 public void saving(){
         Sprint sprint= new Sprint(3,"ja",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"Pending","Pending");
   sprintRepository.save(sprint);
@@ -40,6 +42,8 @@ public void saving(){
     userStoryRepository.save(userStory);
    sprint.getUserStories().add(userStory);
    sprintRepository.save(sprint);
+    System.out.println(sprint.getUserStories().size());
+
 
 }
     public  String function() {
