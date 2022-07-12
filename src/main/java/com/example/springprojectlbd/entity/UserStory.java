@@ -26,7 +26,7 @@ public class UserStory {
 
 
 
-@ManyToMany(mappedBy = "userStories",fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+@ManyToMany(mappedBy = "userStories",fetch=FetchType.LAZY)
     Set<Sprint> sprints= new HashSet<>();
 
     public UserStory(long id, String userStoryName, String description, int countOfStoryPoint, String status) {

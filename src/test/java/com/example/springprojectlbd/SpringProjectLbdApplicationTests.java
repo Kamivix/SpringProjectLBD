@@ -23,6 +23,8 @@ class SpringProjectLbdApplicationTests {
     UserStoryService userStoryService;
 @Autowired
 UserStoryRepository userStoryRepository;
+@Autowired
+OneHundred oneHundred;
 
   @Test
     public void work() throws SQLDataException {
@@ -36,7 +38,7 @@ UserStoryRepository userStoryRepository;
 
 @Test
     public void  test3(){
-    System.out.println(sprintService.countValue());
+    System.out.println(sprintService.countValue(3L));
 }
 
 @Test
@@ -46,5 +48,9 @@ UserStoryRepository userStoryRepository;
     assert (userStories.getSize()==10);
 }
 
+@Test
+    public void doesItWork(){
+      oneHundred.saving();
+}
 
 }

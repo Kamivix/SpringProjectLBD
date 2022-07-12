@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Random;
 @Component
 public class OneHundred {
@@ -37,12 +38,13 @@ public class OneHundred {
 
 public void saving(){
         Sprint sprint= new Sprint(3,"ja",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"Pending","Pending");
+ sprint.setUserStories(new HashSet<>());
   sprintRepository.save(sprint);
    UserStory userStory = new UserStory(120,"Kamil","Kamil",75,"DONE");
     userStoryRepository.save(userStory);
    sprint.getUserStories().add(userStory);
    sprintRepository.save(sprint);
-    System.out.println(sprint.getUserStories().size());
+
 
 
 }

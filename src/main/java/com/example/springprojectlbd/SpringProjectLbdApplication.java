@@ -16,6 +16,7 @@ public class SpringProjectLbdApplication {
 @PostConstruct
 public void function(){
     oneHundred.createOneHunderStory();
+
 }
 @PostConstruct
 public void save(){

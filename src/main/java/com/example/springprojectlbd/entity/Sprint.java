@@ -27,15 +27,15 @@ private String status;
     @ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
     @JoinTable(
             name ="SPRINT_USER_STORY",
-            joinColumns = @JoinColumn(name="SPRINT_ID",referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "USERSTORY_ID",referencedColumnName = "ID")
+            joinColumns = @JoinColumn(name="SPRINT_ID"),
+            inverseJoinColumns = @JoinColumn(name = "USERSTORY_ID")
     )
 
-private Set<UserStory> userStories;
+private Set<UserStory> userStories ;
 
 
     public Set<UserStory> getUserStories() {
-        return userStories = new HashSet<>();
+        return userStories;
     }
 
     public Sprint(long id, String sprintName, Timestamp startTime, Timestamp endTime, String description, String status) {

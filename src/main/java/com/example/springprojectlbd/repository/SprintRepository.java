@@ -19,8 +19,8 @@ SprintRepository extends CrudRepository<Sprint,Long> {
 
 
     @Query
-            ("SELECT sum (c.countOfStoryPoint) FROM Sprint s join s.userStories c where s.id=1 AND c.status LIKE 'DONE'")
+            ("SELECT sum (c.countOfStoryPoint) FROM Sprint s join s.userStories c where s.id=?1 AND c.status LIKE 'DONE'")
 
-    Optional<Integer> returnCountOfStoryPoint();
+    Optional<Integer> returnCountOfStoryPoint(long id);
     }
 

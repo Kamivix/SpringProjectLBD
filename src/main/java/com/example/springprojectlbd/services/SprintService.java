@@ -47,18 +47,46 @@ public Optional<List<Sprint>>getSprintRealizedBetween(Timestamp begin,Timestamp 
     return sprintRepository.findBetweenData(begin,end);
 }
 
-public Optional<Integer> countValue(){
-    return sprintRepository.returnCountOfStoryPoint();
+public Optional<Integer> countValue(Long id){
+    return sprintRepository.returnCountOfStoryPoint(id);
 }
+    public void saveNewUserStory(Long id){
+        Optional<Sprint> sprintOptional = sprintRepository.findById(id);
+        UserStory userStory= userStoryService.addToUserStory(new UserStory(121,"name","description",30,"To do"));
+        sprintOptional.ifPresent(sprint -> {sprint.getUserStories().add(userStory);
+        sprintRepository.save(sprint);});
+
+    }
+
+    public void changeDescritptionInSprint(Long id){
+        Optional<Sprint> sprintOptional = sprintRepository.findById(id);
+        sprintOptional.ifPresent(sprint -> {sprint.setDescription("nowy opis");
+        sprintRepository.save(sprint);});
+
+    }
+
+
+
+
 
 
 //////////////Mappers
-    public SprintDto mapToSprintDto(Sprint sprint){
+    public SprintDto mapToSprintDto(Sprint sprint,boolean listOrNot){
 
     SprintDto sprintDto = new SprintDto(sprint.getId(), sprint.getSprintName(), sprint.getStartTime(),sprint.getEndTime(),sprint.getDescription(),sprint.getStatus());
-sprintDto.setUserStories(sprint.getUserStories().stream().map(userStory -> userStoryService.mapToUserStoryDto(userStory)).collect(Collectors.toSet()));
-        System.out.println(sprint.getUserStories());
+if(listOrNot) {
+    sprintDto.setUserStories(sprint.getUserStories().stream().
+            map(userStory -> userStoryService.mapToUserStoryDto(userStory)).
+            collect(Collectors.toSet()));
+}
         return sprintDto;
 
     }
+
+
+
+
+
+
+
 }
