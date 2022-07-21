@@ -1,11 +1,14 @@
 package com.example.springprojectlbd.services;
 
 import com.example.springprojectlbd.dto.SprintDto;
+import com.example.springprojectlbd.dto.SprintDtoSlim;
 import com.example.springprojectlbd.entity.Sprint;
 import com.example.springprojectlbd.entity.UserStory;
+import com.example.springprojectlbd.event.UserStoryCreatedEvent;
 import com.example.springprojectlbd.repository.SprintRepository;
 import com.example.springprojectlbd.repository.UserStoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,8 +31,8 @@ UserStoryService userStoryService;
         this.userStoryService = userStoryService;
     }
 @Transactional
-    public void saveData(int id, String name, Timestamp dataStart,Timestamp dataEnd, String description, String status) throws SQLDataException {
-    if(id<0||name.isEmpty()||(dataStart.compareTo(dataEnd)>0)||status.isEmpty()){
+    public void saveData(int id, String name, Timestamp dataStart, Timestamp dataEnd, String description, Sprint.StatusType status) throws SQLDataException {
+    if(id<0||name.isEmpty()||(dataStart.compareTo(dataEnd)>0)){
         throw new SQLDataException();
     }
     else{
@@ -65,6 +68,15 @@ public Optional<Integer> countValue(Long id){
 
     }
 
+    public void updateStatus(Long id, Sprint.StatusType statusType){
+        Optional<Sprint> sprintOptional = sprintRepository.findById(id);
+        sprintOptional.ifPresent(sprint -> {sprint.setStatus(statusType);
+            sprintRepository.save(sprint);});
+    }
+    @EventListener
+    public void handleAddStoryEvent(UserStoryCreatedEvent event) {
+        System.out.println("Dziala");
+    }
 
 
 
@@ -81,6 +93,14 @@ if(listOrNot) {
 }
         return sprintDto;
 
+
+        }
+
+    public SprintDtoSlim mapToSprintDtoSlim(Sprint sprint){
+    return new SprintDtoSlim(sprint.getSprintName(),sprint.getStartTime(),sprint.getEndTime(),sprint.getStatus());
+    }
+
+
     }
 
 
@@ -89,4 +109,4 @@ if(listOrNot) {
 
 
 
-}
+

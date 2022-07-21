@@ -29,6 +29,8 @@ public class UserStory {
 @ManyToMany(mappedBy = "userStories",fetch=FetchType.LAZY)
     Set<Sprint> sprints= new HashSet<>();
 
+    @OneToMany(mappedBy = "userStoryLinked")
+    private Set<BinaryFile> binaryFiles = new HashSet<>();
     public UserStory(long id, String userStoryName, String description, int countOfStoryPoint, String status) {
         this.id = id;
         this.userStoryName = userStoryName;
@@ -47,6 +49,8 @@ public class UserStory {
     public Set<Sprint> getSprints() {
         return sprints;
     }
+
+
 
     public void setId(long id) {
         this.id = id;

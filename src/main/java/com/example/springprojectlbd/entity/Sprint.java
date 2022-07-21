@@ -19,12 +19,14 @@ private Timestamp startTime;
 private Timestamp endTime;
     @Column(name="DESCRIPTION")
 private String description;
+
+    @Enumerated(EnumType.STRING)
     @Column(name="STATUS", nullable=false)
-private String status;
+    private StatusType status;
 
 
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch=FetchType.LAZY)
     @JoinTable(
             name ="SPRINT_USER_STORY",
             joinColumns = @JoinColumn(name="SPRINT_ID"),
@@ -38,7 +40,7 @@ private Set<UserStory> userStories ;
         return userStories;
     }
 
-    public Sprint(long id, String sprintName, Timestamp startTime, Timestamp endTime, String description, String status) {
+    public Sprint(long id, String sprintName, Timestamp startTime, Timestamp endTime, String description, StatusType status) {
         this.id = id;
         this.sprintName = sprintName;
         this.startTime = startTime;
@@ -90,15 +92,19 @@ private Set<UserStory> userStories ;
         this.description = description;
     }
 
-    public String getStatus() {
+    public StatusType getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusType status) {
         this.status = status;
     }
 
     public void setUserStories(Set<UserStory> userStories) {
         this.userStories = userStories;
+    }
+
+    public enum StatusType {
+        PENDING, IN_PROGRESS, FINISHED, CANCELED
     }
 }

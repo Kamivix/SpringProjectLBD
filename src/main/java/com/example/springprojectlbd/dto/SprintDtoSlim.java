@@ -1,37 +1,22 @@
 package com.example.springprojectlbd.dto;
 
 import com.example.springprojectlbd.entity.Sprint;
-import com.example.springprojectlbd.entity.UserStory;
 
 import java.sql.Timestamp;
-import java.util.Set;
 
-public class SprintDto {
+public class SprintDtoSlim {
 
-    private Long id;
+
     private String sprintName;
     private Timestamp startTime;
     private Timestamp endTime;
-    private String description;
     private Sprint.StatusType status;
 
-    private Set<UserStoryDto> userStories;
-
-    public SprintDto(Long id, String sprintName, Timestamp startTime, Timestamp endTime, String description, Sprint.StatusType status) {
-        this.id = id;
+    public SprintDtoSlim(String sprintName, Timestamp startTime, Timestamp endTime, Sprint.StatusType status) {
         this.sprintName = sprintName;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.description = description;
         this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getSprintName() {
@@ -58,14 +43,6 @@ public class SprintDto {
         this.endTime = endTime;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Sprint.StatusType getStatus() {
         return status;
     }
@@ -73,14 +50,4 @@ public class SprintDto {
     public void setStatus(Sprint.StatusType status) {
         this.status = status;
     }
-
-    public Set<UserStoryDto> getUserStories() {
-        return userStories;
-    }
-
-    public void setUserStories(Set<UserStoryDto> userStories) {
-        this.userStories = userStories;
-    }
 }
-
-

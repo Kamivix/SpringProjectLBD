@@ -10,7 +10,7 @@ CREATE  TABLE IF NOT EXISTS SPRINT (
                                        StartTime DATETIME ,
                                        EndTime DATETIME ,
                                        Description varchar(255),
-                                       Status ENUM('Pending', 'In progress', 'Finished', 'Canceled')
+                                       Status ENUM('PENDING', 'IN PROGRESS', 'FINISHED', 'CANCELED')
 
 
 );
@@ -32,5 +32,5 @@ CREATE TABLE IF NOT EXISTS SPRINT_USER_STORY (
 
 CREATE TABLE IF NOT EXISTS BINARY_FILE (
                                            UserStory_id long NOT NULL references USER_STORY(Id),
-                                           binaryFile bytea
+                                           binaryFile varbinary
 )

@@ -37,7 +37,7 @@ public class OneHundred {
     }
 
 public void saving(){
-        Sprint sprint= new Sprint(3,"ja",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"Pending","Pending");
+        Sprint sprint= new Sprint(3,"ja",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"Pending",Sprint.StatusType.PENDING);
  sprint.setUserStories(new HashSet<>());
   sprintRepository.save(sprint);
    UserStory userStory = new UserStory(120,"Kamil","Kamil",75,"DONE");
