@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS SPRINT_USER_STORY (
                                                  UserStory_id long NOT NULL references USER_STORY(Id)
 );
 
-CREATE TABLE IF NOT EXISTS BINARY_FILE (
+CREATE TABLE IF NOT EXISTS ATTACHMENT (
+                                           id integer PRIMARY KEY AUTO_INCREMENT,
                                            UserStory_id long NOT NULL references USER_STORY(Id),
                                            binaryFile varbinary
 )

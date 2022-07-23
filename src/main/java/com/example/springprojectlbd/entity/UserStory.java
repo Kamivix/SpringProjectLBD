@@ -1,7 +1,9 @@
 package com.example.springprojectlbd.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,13 +26,13 @@ public class UserStory {
     @Column(name = "STATUS")
     private String status;
 
-
+    @OneToMany(mappedBy="userStoryLink")
+Set<Attachment> attachments= new HashSet<>();
 
 @ManyToMany(mappedBy = "userStories",fetch=FetchType.LAZY)
     Set<Sprint> sprints= new HashSet<>();
 
-    @OneToMany(mappedBy = "userStoryLinked")
-    private Set<BinaryFile> binaryFiles = new HashSet<>();
+
     public UserStory(long id, String userStoryName, String description, int countOfStoryPoint, String status) {
         this.id = id;
         this.userStoryName = userStoryName;
@@ -90,5 +92,13 @@ public class UserStory {
 
     public void setSprints(Set<Sprint> sprints) {
         this.sprints = sprints;
+    }
+
+    public Set<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(Set<Attachment> attachments) {
+        this.attachments = attachments;
     }
 }
