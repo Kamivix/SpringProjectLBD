@@ -16,20 +16,21 @@ import java.util.List;
 @Component
 public class ServicesAspect {
     private static final Logger logger = LoggerFactory.getLogger(ServicesAspect.class);
-@Around("execution(* com.example.springprojectlbd.services.UserStoryService.*(..))")
+@Around("execution(* com.example.springprojectlbd.services.SprintService.*(..))")
 public Object aroundServices(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
   logger.info("ServiceAspect Before (params):");
-    Object val=0;
-  for (Object obj:proceedingJoinPoint.getArgs()){
-            logger.info("\t{}", obj.toString());
+    Object val=proceedingJoinPoint.getArgs();
+
+            logger.info("\t{}", val.toString());
             try {
                 val=proceedingJoinPoint.proceed();
+                logger.info(val.toString() + " to zwraca");
             }
             catch (Throwable e){
 
             }
-            logger.info(val.toString() + " to zwraca");
-        }
+
+
 return val;
 }
 }

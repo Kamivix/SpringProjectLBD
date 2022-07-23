@@ -12,6 +12,10 @@ import com.example.springprojectlbd.services.UserStoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
@@ -123,6 +127,12 @@ return userStoryDtoSlims;
     @GetMapping("sorted")
     public List<UserStoryDtoSlim> findPage(@RequestParam("page") Integer page,@RequestParam("limit") Integer limit){
         return userStoryService.getUserStortedByname(page,limit);
+    }
+
+    @GetMapping("/Test")
+    public ResponseEntity getLoggedUser() {
+        Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok().body(auth.getName() + " " + auth.getAuthorities());
     }
 
 

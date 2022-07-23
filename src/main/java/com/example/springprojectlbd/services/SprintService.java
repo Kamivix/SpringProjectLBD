@@ -7,6 +7,8 @@ import com.example.springprojectlbd.entity.UserStory;
 import com.example.springprojectlbd.event.UserStoryCreatedEvent;
 import com.example.springprojectlbd.repository.SprintRepository;
 import com.example.springprojectlbd.repository.UserStoryRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +27,8 @@ public class SprintService {
 SprintRepository sprintRepository;
 UserStoryRepository userStoryRepository;
 UserStoryService userStoryService;
+
+private static final Logger logger = LoggerFactory.getLogger(UserStoryCreatedEvent.class);
 @Autowired
     public SprintService(SprintRepository sprintRepository,UserStoryRepository userStoryRepository, UserStoryService userStoryService) {
         this.sprintRepository = sprintRepository;
@@ -75,7 +80,7 @@ public Optional<Integer> countValue(Long id){
     }
     @EventListener
     public void handleAddStoryEvent(UserStoryCreatedEvent event) {
-        System.out.println("Dziala");
+        logger.info("Dziala id to "+ event.getUserStoryId());
     }
 
 
