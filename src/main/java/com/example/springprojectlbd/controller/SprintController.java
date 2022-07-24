@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
+import org.springframework.security.web.header.Header;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -41,14 +42,14 @@ private  final SprintService sprintService;
 
 
 @PutMapping("update/{id}")
-public ResponseEntity update(@PathVariable Long id){
+public ResponseEntity<Void> update(@PathVariable Long id){
         sprintService.changeDescritptionInSprint(id);
-return ResponseEntity.ok().header("successful", "true").body("Udalo sie");
+return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 }
 @DeleteMapping("delete/{id}")
-public ResponseEntity delete(@PathVariable Long id){
+public ResponseEntity<Void> delete(@PathVariable Long id){
         userStoryService.delete(id);
-        return ResponseEntity.ok().header("successful", "true").body("Udalo sie");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 }
 
 
@@ -107,9 +108,9 @@ return ResponseEntity.ok().header("successful", "true").body(userStoryDtoSlims);
     //zad 9
 
     @PutMapping("/status/{id}")
-    public ResponseEntity setNewStatus(@PathVariable Long id, @RequestParam("statusType") Sprint.StatusType statusType){
+    public ResponseEntity<Void> setNewStatus(@PathVariable Long id, @RequestParam("statusType") Sprint.StatusType statusType){
         sprintService.updateStatus(id,statusType);
-        return ResponseEntity.ok().header("successful", "true").body("Udalo sie");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("betweenTime")
@@ -138,9 +139,9 @@ return ResponseEntity.ok().header("successful", "true").body(userStoryDtoSlims);
 
 
     @PostMapping("/addAttachment")
-    public ResponseEntity addAttachmetn(@RequestBody Attachment attachment, @RequestParam long id){
+    public ResponseEntity<Void> addAttachmetn(@RequestBody Attachment attachment, @RequestParam long id){
         userStoryService.addAttachment(id,attachment);
-        return ResponseEntity.ok().header("successful", "true").body("Dodano zalacznik");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/getAttachment")
