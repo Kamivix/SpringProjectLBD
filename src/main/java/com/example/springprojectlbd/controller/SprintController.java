@@ -1,8 +1,10 @@
 package com.example.springprojectlbd.controller;
 
+import com.example.springprojectlbd.dto.AttachmentDto;
 import com.example.springprojectlbd.dto.SprintDto;
 import com.example.springprojectlbd.dto.SprintDtoSlim;
 import com.example.springprojectlbd.dto.UserStoryDtoSlim;
+import com.example.springprojectlbd.entity.Attachment;
 import com.example.springprojectlbd.entity.Sprint;
 import com.example.springprojectlbd.entity.UserStory;
 import com.example.springprojectlbd.event.UserStoryCreatedEvent;
@@ -20,10 +22,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 @RestController
@@ -42,13 +41,14 @@ private  final SprintService sprintService;
 
 
 @PutMapping("update/{id}")
-public void update(@PathVariable Long id){
+public ResponseEntity update(@PathVariable Long id){
         sprintService.changeDescritptionInSprint(id);
-
+return ResponseEntity.ok().header("successful", "true").body("Udalo sie");
 }
 @DeleteMapping("delete/{id}")
-public void delete(@PathVariable Long id){
+public ResponseEntity delete(@PathVariable Long id){
         userStoryService.delete(id);
+        return ResponseEntity.ok().header("successful", "true").body("Udalo sie");
 }
 
 
@@ -58,7 +58,7 @@ public void delete(@PathVariable Long id){
 
 
     @GetMapping("sprints/{listOrNot}")
-    List<SprintDto> sprintList(@PathVariable boolean listOrNot){
+    ResponseEntity <List<SprintDto>> sprintList(@PathVariable boolean listOrNot){
         List<Sprint> sprints= (List<Sprint>) sprintRepository.findAll();
         List<SprintDto> afterMappingList = new ArrayList<>();
 for(Sprint s:sprints){
@@ -66,29 +66,29 @@ for(Sprint s:sprints){
 
 }
 
-       return afterMappingList;
+       return ResponseEntity.ok().header("successful", "true").body(afterMappingList);
 
 
     }
 
     //Zad3//
     @PostMapping("sprint/{id}")
-    String saveNewUserStoryToSprint(@PathVariable Long id){
+   ResponseEntity<String> saveNewUserStoryToSprint(@PathVariable Long id){
     sprintService.saveNewUserStory(id);
     publisher.publishEvent(new UserStoryCreatedEvent(id));
-    return "ok";
+    return ResponseEntity.ok().header("successful", "true").body("ok");
 
     }
 
     //Zad4//
     @GetMapping("points/{id}")
-    Optional<Integer> points(@PathVariable Long id){
-        return sprintService.countValue(id);
+    ResponseEntity<Optional<Integer>> points(@PathVariable Long id){
+        return ResponseEntity.ok().header("successful", "true").body(sprintService.countValue(id));
     }
 
     //Zad5//
 @GetMapping("userstories/{id}")
-    List<UserStoryDtoSlim> checkUserStories(@PathVariable Long id){
+     ResponseEntity<List<UserStoryDtoSlim>> checkUserStories(@PathVariable Long id){
 
 
     List<UserStoryDtoSlim> userStoryDtoSlims= new ArrayList<>();
@@ -96,45 +96,63 @@ for(Sprint s:sprints){
    for (UserStory u:list){
        userStoryDtoSlims.add(userStoryService.mapToUserStorySlimDto(u));
    }
-return userStoryDtoSlims;
+return ResponseEntity.ok().header("successful", "true").body(userStoryDtoSlims);
     }
 //Zad 6
     @GetMapping("description/{id}")
-    Optional<String> checkDescription(@PathVariable Long id){
-        return userStoryService.getDescription(id);
+    ResponseEntity<Optional<String>> checkDescription(@PathVariable Long id){
+        return ResponseEntity.ok().header("successful", "true").body(userStoryService.getDescription(id));
     }
 
     //zad 9
 
     @PutMapping("/status/{id}")
-    public void setNewStatus(@PathVariable Long id, @RequestParam("statusType") Sprint.StatusType statusType){
+    public ResponseEntity setNewStatus(@PathVariable Long id, @RequestParam("statusType") Sprint.StatusType statusType){
         sprintService.updateStatus(id,statusType);
+        return ResponseEntity.ok().header("successful", "true").body("Udalo sie");
     }
 
     @GetMapping("betweenTime")
-    public List<SprintDtoSlim> betweenTime(@RequestParam Timestamp begin, @RequestParam Timestamp end){
+    public ResponseEntity<List<SprintDtoSlim>> betweenTime(@RequestParam Timestamp begin, @RequestParam Timestamp end){
        Optional<List<Sprint>> sprintOptional = sprintService.getSprintRealizedBetween(begin,end);
         List<SprintDtoSlim> sprintDtoSlims = new ArrayList<>();
         for(Sprint s:sprintOptional.get()){
             sprintDtoSlims.add(sprintService.mapToSprintDtoSlim(s));
         }
-        return sprintDtoSlims;
+        return ResponseEntity.ok().header("successful", "true").body(sprintDtoSlims);
 
 
 
     }
 
     @GetMapping("sorted")
-    public List<UserStoryDtoSlim> findPage(@RequestParam("page") Integer page,@RequestParam("limit") Integer limit){
-        return userStoryService.getUserStortedByname(page,limit);
+    public ResponseEntity<List<UserStoryDtoSlim>> findPage(@RequestParam("page") Integer page,@RequestParam("limit") Integer limit){
+        return ResponseEntity.ok().header("successful", "true").body(userStoryService.getUserStortedByname(page,limit));
     }
 
     @GetMapping("/Test")
     public ResponseEntity getLoggedUser() {
         Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
-        return ResponseEntity.ok().body(auth.getName() + " " + auth.getAuthorities());
+        return ResponseEntity.ok().header("successful", "true").body(auth.getName() + " " + auth.getAuthorities());
     }
 
+
+    @PostMapping("/addAttachment")
+    public ResponseEntity addAttachmetn(@RequestBody Attachment attachment, @RequestParam long id){
+        userStoryService.addAttachment(id,attachment);
+        return ResponseEntity.ok().header("successful", "true").body("Dodano zalacznik");
+    }
+
+    @GetMapping("/getAttachment")
+public ResponseEntity <Set<AttachmentDto>> getAttachment(@RequestParam long id){
+        Set<Attachment> set = userStoryService.getAttachment(id).get();
+        Set<AttachmentDto> attachmentDtos= new HashSet<>();
+      for(Attachment a:set){
+          attachmentDtos.add(userStoryService.mapToAttachmentDto(a));
+      }
+
+      return ResponseEntity.ok().header("successful", "true").body(attachmentDtos);
+    }
 
 
 

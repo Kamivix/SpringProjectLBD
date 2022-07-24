@@ -49,9 +49,14 @@ AttachmentRepository attachmentRepository;
     public void delete(Long id){
        Optional<UserStory> optionalUserStory= userStoryRepository.findById(id);
        for(Sprint s:optionalUserStory.get().getSprints()){
-           Iterator<UserStory> it = s.getUserStories().iterator();
           s.getUserStories().remove(optionalUserStory.get());
        }
+       Iterator<Attachment> it = optionalUserStory.get().getAttachments().iterator();
+        attachmentRepository.deleteAll(optionalUserStory.get().getAttachments());
+        while (it.hasNext()){
+            Attachment a = it.next();
+            it.remove();
+        }
        userStoryRepository.delete(optionalUserStory.get());
 
     }
@@ -83,6 +88,10 @@ AttachmentRepository attachmentRepository;
 
     public UserStoryDtoSlim mapToUserStorySlimDto(UserStory userStory){
         return new UserStoryDtoSlim(userStory.getId(), userStory.getUserStoryName(), userStory.getCountOfStoryPoint(), userStory.getStatus());
+    }
+
+    public AttachmentDto mapToAttachmentDto(Attachment attachment){
+    return  new AttachmentDto(attachment.getId(), attachment.getBinaryFile());
     }
 
 
