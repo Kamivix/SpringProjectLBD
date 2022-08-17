@@ -6,6 +6,7 @@ import com.example.springprojectlbd.dto.UserStoryDto;
 import com.example.springprojectlbd.entity.Sprint;
 import com.example.springprojectlbd.event.UserStoryCreatedEvent;
 
+import java.sql.SQLDataException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -20,5 +21,6 @@ public interface SprintService {
     void handleAddStoryEvent(UserStoryCreatedEvent event);
     List<SprintDto> getSprints(Boolean listOrNot);
     void saveNewUserStory(Long id,UserStoryDto userStoryDto);
-
+    void saveData(String name, Timestamp dataStart, Timestamp dataEnd, String description, Sprint.StatusType status) throws SQLDataException;
+    void saveNewSprint(SprintDto sprintDto);
 }

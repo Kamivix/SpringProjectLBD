@@ -34,7 +34,7 @@ SprintMapper sprintMapper;
 UserStoryMapper userStoryMapper;
 
 private static final Logger logger = LoggerFactory.getLogger(UserStoryCreatedEvent.class);
-
+    @Override
     @Transactional
     public void saveData(String name, Timestamp dataStart, Timestamp dataEnd, String description, Sprint.StatusType status) throws SQLDataException {
     if(name.isEmpty()||(dataStart.compareTo(dataEnd)>0)){
@@ -51,6 +51,15 @@ private static final Logger logger = LoggerFactory.getLogger(UserStoryCreatedEve
     sprintRepository.save(sprint);
     }
 }
+
+@Override
+public void saveNewSprint(SprintDto sprintDto){
+        Sprint sprint=sprintMapper.mapDtoToEntitySprint(sprintDto);
+        sprintRepository.save(sprint);
+}
+
+
+
 @Override
 public List<SprintDto> getSprints(Boolean listOrNot){
     List<Sprint> sprints = (List<Sprint>) sprintRepository.findAll();

@@ -38,7 +38,7 @@ public class SprintController {
 
     }
 
-        @PostMapping("/sprint/{id}")
+        @PostMapping("/{id}")
             ResponseEntity<String> saveNewUserStoryToSprint(@PathVariable Long id, @Valid  @RequestBody  UserStoryDto userStoryDto){
             sprintService.saveNewUserStory(id, userStoryDto);
             publisher.publishEvent(new UserStoryCreatedEvent(id));
@@ -75,6 +75,14 @@ public class SprintController {
         Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
         return ResponseEntity.ok().header("successful", "true").body(auth.getName() + " " + auth.getAuthorities());
     }
+
+    @PostMapping("/save")
+    public ResponseEntity<Void> setNewSprint(@Valid @RequestBody SprintDto sprintDto){
+            sprintService.saveNewSprint(sprintDto);
+
+            return ResponseEntity.ok().build();
+    }
+
 
 
 

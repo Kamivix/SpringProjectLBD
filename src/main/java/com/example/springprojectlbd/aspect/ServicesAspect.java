@@ -6,8 +6,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 
 
@@ -23,7 +21,7 @@ public Object aroundServices(ProceedingJoinPoint proceedingJoinPoint) throws Thr
    Object val;
 
                 val=proceedingJoinPoint.proceed();
-                logger.info(val.toString() + " to zwraca");
+                logger.info("Service's method return: " +val.toString());
 
 return val;
 
