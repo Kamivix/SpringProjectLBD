@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.util.Set;
 @Getter
 @Setter
-@RequiredArgsConstructor
 @AllArgsConstructor
 
 public class SprintDto {
