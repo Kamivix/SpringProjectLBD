@@ -1,8 +1,14 @@
 package com.example.springprojectlbd.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Setter
+@Getter
+@NoArgsConstructor
 public class ExchangeRateDto {
 
     String table;
@@ -13,57 +19,6 @@ public class ExchangeRateDto {
 
     String currency;
     List<Rate> rates = new ArrayList<>();
-
-    public String getTable() {
-        return table;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public void setTable(String table) {
-        this.table = table;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
-
-    public String getEffectiveData() {
-        return effectiveData;
-    }
-
-    public void setEffectiveData(String effectiveData) {
-        this.effectiveData = effectiveData;
-    }
-
-    public List<Rate> getRates() {
-        return rates;
-    }
-
-    public void setRates(List<Rate> rates) {
-        this.rates = rates;
-    }
-
-    public ExchangeRateDto() {
-    }
 
     public String getFormatForTable() {
         StringBuilder  stringBuilder = new StringBuilder();
@@ -87,36 +42,13 @@ public class ExchangeRateDto {
 
 }
 
-
+@Getter
+@Setter
+@NoArgsConstructor
 class Rate{
     String currency;
     String code;
     Double mid;
 
-    public String getCurrency() {
-        return currency;
-    }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Double getMid() {
-        return mid;
-    }
-
-    public void setMid(Double mid) {
-        this.mid = mid;
-    }
-
-    public Rate() {
-    }
 }

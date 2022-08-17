@@ -1,86 +1,36 @@
 package com.example.springprojectlbd.dto;
 
 import com.example.springprojectlbd.entity.Sprint;
-import com.example.springprojectlbd.entity.UserStory;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.Set;
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 
 public class SprintDto {
 
     private Long id;
+    @NotNull
     private String sprintName;
     private Timestamp startTime;
     private Timestamp endTime;
     private String description;
+    @NotNull
     private Sprint.StatusType status;
-
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Set<UserStoryDto> userStories;
 
-    public SprintDto(Long id, String sprintName, Timestamp startTime, Timestamp endTime, String description, Sprint.StatusType status) {
-        this.id = id;
-        this.sprintName = sprintName;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.description = description;
-        this.status = status;
-    }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getSprintName() {
-        return sprintName;
-    }
-
-    public void setSprintName(String sprintName) {
-        this.sprintName = sprintName;
-    }
-
-    public Timestamp getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
-    }
-
-    public Timestamp getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Sprint.StatusType getStatus() {
-        return status;
-    }
-
-    public void setStatus(Sprint.StatusType status) {
-        this.status = status;
-    }
-
-    public Set<UserStoryDto> getUserStories() {
-        return userStories;
-    }
-
-    public void setUserStories(Set<UserStoryDto> userStories) {
-        this.userStories = userStories;
-    }
 }
 
 

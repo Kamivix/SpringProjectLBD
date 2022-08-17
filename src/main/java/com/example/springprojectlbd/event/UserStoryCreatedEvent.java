@@ -1,18 +1,16 @@
 package com.example.springprojectlbd.event;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
 public class UserStoryCreatedEvent {
 
     Long userStoryId;
 
-    public Long getUserStoryId() {
-        return userStoryId;
-    }
 
-    public void setUserStoryId(Long userStoryId) {
-        this.userStoryId = userStoryId;
-    }
 
-    public UserStoryCreatedEvent(Long userStoryId) {
-        this.userStoryId = userStoryId;
-    }
 }

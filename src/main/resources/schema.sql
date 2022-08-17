@@ -5,7 +5,7 @@ DROP Table IF EXISTS UserStory cascade  ;
 
 
 CREATE  TABLE IF NOT EXISTS SPRINT (
-                                       Id long PRIMARY KEY ,
+                                       Id long PRIMARY KEY AUTO_INCREMENT,
                                        SprintName varchar(255),
                                        StartTime DATETIME ,
                                        EndTime DATETIME ,
@@ -17,7 +17,7 @@ CREATE  TABLE IF NOT EXISTS SPRINT (
 
 
 CREATE TABLE IF NOT EXISTS USER_STORY  (
-                                           Id long PRIMARY KEY ,
+                                           Id long PRIMARY KEY AUTO_INCREMENT,
                                            UserStoryName varchar(255),
                                            Description varchar(255),
                                            CountOfStoryPoint INT ,

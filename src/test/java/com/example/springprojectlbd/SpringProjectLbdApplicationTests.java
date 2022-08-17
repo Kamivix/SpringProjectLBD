@@ -29,7 +29,7 @@ OneHundred oneHundred;
   @Test
     public void work() throws SQLDataException {
 
-       sprintServiceImpl.saveData(5,"ja",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"Pending", Sprint.StatusType.valueOf("Pending"));
+       sprintServiceImpl.saveData("ja",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"Pending", Sprint.StatusType.valueOf("Pending"));
   }
 
 @Test

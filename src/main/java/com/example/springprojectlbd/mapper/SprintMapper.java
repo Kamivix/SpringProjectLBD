@@ -1,21 +1,28 @@
 package com.example.springprojectlbd.mapper;
 
 import com.example.springprojectlbd.dto.SprintDto;
-import com.example.springprojectlbd.dto.UserStoryDto;
+import com.example.springprojectlbd.dto.SprintDtoSlim;
 import com.example.springprojectlbd.entity.Sprint;
-import com.example.springprojectlbd.entity.UserStory;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.*;
 
-import java.util.Set;
+import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SprintMapper {
 
-    SprintMapper SPRINT_MAPPER = Mappers.getMapper(SprintMapper.class);
+    @Named("mapEntityToDtoSprint")
+    SprintDto mapEntityToDtoSprint(Sprint sprint);
+    @Named("mapDtoToEntitySprint")
+    Sprint mapDtoToEntitySprint(SprintDto sprintDto);
+    @Named("mapEntityListToDtoListSprint")
+    @IterableMapping(qualifiedByName = "mapEntityToDtoSprint")
+    List<SprintDto> mapEntityListToDtoListSprint(List<Sprint> sprints);
+    @Named("mapEntityToDtoSlim")
+    SprintDtoSlim mapEntityToDtoSlim(Sprint source);
 
-    SprintDto mapToSprintDto(Sprint sprint);
-    @Mapping(source = "userStories",target = "userStories")
-   Set<UserStoryDto> func(Set<UserStory> userStories);
+    @Named("mapEntityListToDtoSlimListSprint")
+    @IterableMapping(qualifiedByName = "mapEntityToDtoSlim")
+    List<SprintDtoSlim> mapEntityListToDtoSlimListSprint(List<Sprint> sprints);
 }

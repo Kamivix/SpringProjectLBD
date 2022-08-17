@@ -1,14 +1,20 @@
 package com.example.springprojectlbd.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "SPRINT")
+@Getter
+@Setter
+@RequiredArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Sprint {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID", nullable=false)
     private long id;
     @Column(name="SPRINTNAME", nullable=false)
@@ -35,74 +41,6 @@ private String description;
 
 private Set<UserStory> userStories ;
 
-
-    public Set<UserStory> getUserStories() {
-        return userStories;
-    }
-
-    public Sprint(long id, String sprintName, Timestamp startTime, Timestamp endTime, String description, StatusType status) {
-        this.id = id;
-        this.sprintName = sprintName;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.description = description;
-        this.status = status;
-    }
-
-    public Sprint() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getSprintName() {
-        return sprintName;
-    }
-
-    public void setSprintName(String sprintName) {
-        this.sprintName = sprintName;
-    }
-
-    public Timestamp getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
-    }
-
-    public Timestamp getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public StatusType getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusType status) {
-        this.status = status;
-    }
-
-    public void setUserStories(Set<UserStory> userStories) {
-        this.userStories = userStories;
-    }
 
     public enum StatusType {
         PENDING, IN_PROGRESS, FINISHED, CANCELED

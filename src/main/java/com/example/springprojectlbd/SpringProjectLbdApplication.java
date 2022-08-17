@@ -1,21 +1,21 @@
 package com.example.springprojectlbd;
 
-import com.example.springprojectlbd.entity.Sprint;
-import com.example.springprojectlbd.entity.UserStory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
-import java.sql.Timestamp;
 
+@AllArgsConstructor
 @SpringBootApplication
 public class SpringProjectLbdApplication {
-    @Autowired
+
     OneHundred oneHundred;
+
+
 @PostConstruct
 public void function(){
-    oneHundred.createOneHunderStory();
+    oneHundred.createOneHundredStory();
 
 }
 @PostConstruct
