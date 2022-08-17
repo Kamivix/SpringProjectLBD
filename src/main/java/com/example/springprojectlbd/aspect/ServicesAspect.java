@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 public class ServicesAspect {
     private static final Logger logger = LoggerFactory.getLogger(ServicesAspect.class);
-@Around("execution(* com.example.springprojectlbd.services.SprintService.*(..))")
+@Around("execution(* com.example.springprojectlbd.services.SprintServiceImpl.*(..))")
 public Object aroundServices(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
   logger.info("ServiceAspect Before (params):");
     Object val=proceedingJoinPoint.getArgs();

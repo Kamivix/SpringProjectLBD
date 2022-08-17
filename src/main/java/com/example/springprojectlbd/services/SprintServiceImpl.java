@@ -1,0 +1,122 @@
+package com.example.springprojectlbd.services;
+
+import com.example.springprojectlbd.dto.SprintDto;
+import com.example.springprojectlbd.dto.SprintDtoSlim;
+import com.example.springprojectlbd.entity.Sprint;
+import com.example.springprojectlbd.entity.UserStory;
+import com.example.springprojectlbd.event.UserStoryCreatedEvent;
+import com.example.springprojectlbd.repository.SprintRepository;
+import com.example.springprojectlbd.repository.UserStoryRepository;
+import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.sql.SQLDataException;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import java.util.stream.Collectors;
+
+@Service
+@AllArgsConstructor
+public class SprintServiceImpl implements SprintService {
+SprintRepository sprintRepository;
+UserStoryRepository userStoryRepository;
+UserStoryServiceImpl userStoryServiceImpl;
+
+private static final Logger logger = LoggerFactory.getLogger(UserStoryCreatedEvent.class);
+//@Autowired
+//    public SprintServiceImpl(SprintRepository sprintRepository, UserStoryRepository userStoryRepository, UserStoryServiceImpl userStoryServiceImpl) {
+//        this.sprintRepository = sprintRepository;
+//        this.userStoryRepository=userStoryRepository;
+//        this.userStoryServiceImpl = userStoryServiceImpl;
+//    }
+    @Transactional
+    public void saveData(int id, String name, Timestamp dataStart, Timestamp dataEnd, String description, Sprint.StatusType status) throws SQLDataException {
+    if(id<0||name.isEmpty()||(dataStart.compareTo(dataEnd)>0)){
+        throw new SQLDataException();
+    }
+    else{
+    Sprint sprint = new Sprint(id,name,dataStart,dataEnd,description,status);
+    sprintRepository.save(sprint);
+    }
+}
+
+    @Override
+    public Set<UserStory> getUserStoryList(long id){
+    Optional<Sprint> result=sprintRepository.findById(id);
+   return result.map(sprint -> sprint.getUserStories()).orElse(null);
+}
+    @Override
+    public Optional<List<Sprint>>getSprintRealizedBetween(Timestamp begin,Timestamp end){
+    return sprintRepository.findBetweenData(begin,end);
+}
+    @Override
+    public Optional<Integer> countValue(Long id){
+    return sprintRepository.returnCountOfStoryPoint(id);
+}
+    @Override
+    public void saveNewUserStory(Long id){
+        Optional<Sprint> sprintOptional = sprintRepository.findById(id);
+        UserStory userStory= userStoryServiceImpl.addToUserStory(new UserStory(121,"name","description",30,"To do"));
+        sprintOptional.ifPresent(sprint -> {sprint.getUserStories().add(userStory);
+        sprintRepository.save(sprint);});
+
+    }
+    @Override
+    public void changeDescriptionInSprint(Long id){
+        Optional<Sprint> sprintOptional = sprintRepository.findById(id);
+        sprintOptional.ifPresent(sprint -> {sprint.setDescription("nowy opis");
+        sprintRepository.save(sprint);});
+
+    }
+    @Override
+    public void updateStatus(Long id, Sprint.StatusType statusType){
+        Optional<Sprint> sprintOptional = sprintRepository.findById(id);
+        sprintOptional.ifPresent(sprint -> {sprint.setStatus(statusType);
+            sprintRepository.save(sprint);});
+    }
+    @EventListener
+    @Override
+    public void handleAddStoryEvent(UserStoryCreatedEvent event) {
+        logger.info("Dziala id to "+ event.getUserStoryId());
+    }
+
+
+
+
+
+//////////////Mappers
+    public SprintDto mapToSprintDto(Sprint sprint,boolean listOrNot){
+
+     SprintDto sprintDto = new SprintDto(sprint.getId(), sprint.getSprintName(), sprint.getStartTime(),sprint.getEndTime(),sprint.getDescription(),sprint.getStatus());
+        if(listOrNot) {
+    sprintDto.setUserStories(sprint.getUserStories().stream().
+            map(userStory -> userStoryServiceImpl.mapToUserStoryDto(userStory)).
+            collect(Collectors.toSet()));
+}
+        return sprintDto;
+
+
+        }
+
+    public SprintDtoSlim mapToSprintDtoSlim(Sprint sprint){
+    return new SprintDtoSlim(sprint.getSprintName(),sprint.getStartTime(),sprint.getEndTime(),sprint.getStatus());
+    }
+
+
+    }
+
+
+
+
+
+
+
+
