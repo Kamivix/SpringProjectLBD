@@ -21,15 +21,17 @@ public class AttachmentServiceImpl implements AttachmentService {
     AttachmentMapper attachmentMapper;
 
     @Override
-    public void addAttachment(Long id, Attachment attachment){
+    public void addAttachment(Long id, AttachmentDto attachmentDto){
         UserStory userStory= userStoryRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Entity with "+ id +" not found"));
+      Attachment attachment=attachmentMapper.mapDtoToAttachment(attachmentDto);
         attachment.setUserStoryLink(userStory);
         attachmentRepository.save(attachment);
 
     }
     @Override
-    public Set<AttachmentDto> getAttachment(Long id){
+    public String getAttachment(Long id){
         UserStory userStory = userStoryRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Entity with "+ id +" not found"));
-        return attachmentMapper.mapToDtoAttachmentList(userStory.getAttachments());
+//        attachmentMapper.mapToDtoAttachmentList(userStory.getAttachments());
+        return String.valueOf(userStory.getAttachments());
     }
 }

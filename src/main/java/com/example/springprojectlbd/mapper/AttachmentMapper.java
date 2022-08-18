@@ -13,6 +13,8 @@ public interface AttachmentMapper {
 
     @Named("mapToDtoAttachment")
     AttachmentDto mapToDtoAttachment(Attachment source);
+    @Named("mapDtoToAttachment")
+    Attachment mapDtoToAttachment(AttachmentDto attachmentDto);
 
     @Named("mapEntityToDtoList")
     @IterableMapping(qualifiedByName = "mapToDtoAttachment")

@@ -7,7 +7,7 @@ import java.util.Set;
 
 public interface AttachmentService {
 
-    void addAttachment(Long id, Attachment attachment);
+    void addAttachment(Long id, AttachmentDto attachment);
 
-    Set<AttachmentDto> getAttachment(Long id);
+    String getAttachment(Long id);
 }

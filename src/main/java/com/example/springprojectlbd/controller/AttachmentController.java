@@ -6,7 +6,9 @@ import com.example.springprojectlbd.services.AttachmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Set;
 
 @RestController
@@ -17,14 +19,19 @@ public class AttachmentController {
     AttachmentService attachmentService;
 
     @PostMapping("/addAttachment")
-    public ResponseEntity<Void> addAttachment(@RequestBody Attachment attachment, @RequestParam long id){
-
-        attachmentService.addAttachment(id,attachment);
+    public ResponseEntity<Void> addAttachment(@RequestParam("file") MultipartFile attachment, @RequestParam("userStoryId") long id){
+AttachmentDto attachmentDto= new AttachmentDto();
+try{
+    attachmentDto.setBinaryFile(attachment.getBytes());
+} catch (IOException e) {
+    throw new RuntimeException(e);
+}
+        attachmentService.addAttachment(id,attachmentDto);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/getAttachment")
-    public ResponseEntity <Set<AttachmentDto>> getAttachment(@RequestParam long id){
+    public ResponseEntity <String> getAttachment(@RequestParam("id") long id){
         return ResponseEntity.ok().header("successful", "true").body(attachmentService.getAttachment(id));
     }
 }
